@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#python仮想環境の除外
+.venv/
+
+#エディタ設定の除外
+.idea/
+.vscode/
+
+# General logs
+*.log
