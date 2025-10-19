@@ -13,7 +13,7 @@ export default function Home() {
   const [barcode, setBarcode] = useState("");
   const [product, setProduct] = useState<Product>({});
 // 追加
-  const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState<Product[]>([]);
   const [showProductList, setShowProductList] = useState(false);
   const toggleProductList = async () => {
   if (showProductList) {
@@ -65,7 +65,6 @@ return ( <div className="mx-auto px-4 max-w-xl">
 
   {/* 入力フォーム */}
 <section className="mt-8 border bg-white p-4 rounded-xl shadow relative">
-<div className="flex">
   {/* #追加２ */}
   <div className="flex flex-col md:flex-row">
   <div className="md:w-1/3 p-4 border-r">
@@ -93,18 +92,7 @@ return ( <div className="mx-auto px-4 max-w-xl">
     履歴表示
   </button>
   {/* 追加終了２ */}
-  
-  <div className="w-3/4 p-4">
-    {/* 履歴表示コンポーネント */}
-  </div>
 </div>
-
-  <button
-    onClick={handleShowHistory}
-    className="absolute top-2 right-2 bg-gray-500 text-white px-3 py-1 rounded text-sm"
-  >
-    履歴表示
-  </button>
 
   <h2 className="mb-4 text-lg font-bold text-gray-500">入力フォーム</h2>
     <label className="block mb-2 text-sm font-bold text-gray-700">商品コード</label>
