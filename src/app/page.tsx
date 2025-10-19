@@ -70,7 +70,7 @@ return ( <div className="mx-auto px-4 max-w-xl">
   <div className="flex flex-col md:flex-row">
   <div className="md:w-1/3 p-4 border-r">
     {/* 商品一覧 */}
-    <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={fetchProductList}>商品一覧を表示</button>
+    <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={toggleProductList}>商品一覧を表示</button>
         {showProductList && (
       <ul className="mt-4 space-y-2">
         {productList.map((item) => (
