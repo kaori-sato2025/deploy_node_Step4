@@ -6,23 +6,30 @@ type Product = {
   code?: string;
   name?: string;
   price?: number;
+  purchased_at?: string;
 };
 
 export default function Home() {
   const [barcode, setBarcode] = useState("");
   const [product, setProduct] = useState<Product>({});
+// 追加
   const [productList, setProductList] = useState([]);
   const [showProductList, setShowProductList] = useState(false);
-  const fetchProductList = async () => {
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/products`);
-    const data = await res.json();
-    setProductList(data);
-    setShowProductList(true);
-  } catch (error) {
-    console.error("商品一覧取得エラー:", error);
+  const toggleProductList = async () => {
+  if (showProductList) {
+    setShowProductList(false);
+  } else {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/products`);
+      const data = await res.json();
+      setProductList(data);
+      setShowProductList(true);
+    } catch (error) {
+      console.error("商品一覧取得エラー:", error);
+    }
   }
 };
+// 追加終了
   const [purchaseList, setPurchaseList] = useState<Product[]>([]);
   const handleReadCode = async () => {
     try {
@@ -59,15 +66,12 @@ return ( <div className="mx-auto px-4 max-w-xl">
   {/* 入力フォーム */}
 <section className="mt-8 border bg-white p-4 rounded-xl shadow relative">
 <div className="flex">
-  <div className="w-1/4 p-4 border-r">
-    <button
-      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-      onClick={fetchProductList}
-    >
-      商品一覧を表示
-    </button>
-
-    {showProductList && (
+  {/* #追加２ */}
+  <div className="flex flex-col md:flex-row">
+  <div className="md:w-1/3 p-4 border-r">
+    {/* 商品一覧 */}
+    <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={fetchProductList}>商品一覧を表示</button>
+        {showProductList && (
       <ul className="mt-4 space-y-2">
         {productList.map((item) => (
           <li key={item.code} className="border p-2 rounded shadow-sm">
@@ -77,17 +81,31 @@ return ( <div className="mx-auto px-4 max-w-xl">
       </ul>
     )}
   </div>
-
+    
+  <div className="md:w-2/3 p-4">
+    {/* 履歴表示 or 入力フォーム */}  
+  </div>
+</div>
+    <button
+    onClick={handleShowHistory}
+    className="absolute top-2 right-2 bg-gray-500 text-white px-3 py-1 rounded text-sm"
+  >
+    履歴表示
+  </button>
+  {/* 追加終了２ */}
+  
   <div className="w-3/4 p-4">
     {/* 履歴表示コンポーネント */}
   </div>
 </div>
+
   <button
     onClick={handleShowHistory}
     className="absolute top-2 right-2 bg-gray-500 text-white px-3 py-1 rounded text-sm"
   >
     履歴表示
   </button>
+
   <h2 className="mb-4 text-lg font-bold text-gray-500">入力フォーム</h2>
     <label className="block mb-2 text-sm font-bold text-gray-700">商品コード</label>
     <input type="text" value={barcode} onChange={(e) => setBarcode(e.target.value)} placeholder="商品コードを入力" className="w-full p-2 border rounded" />
