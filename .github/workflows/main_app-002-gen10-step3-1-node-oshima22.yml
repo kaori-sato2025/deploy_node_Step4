@@ -59,7 +59,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: Unzip release.zip
+        run: unzip release.zip
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -69,5 +69,6 @@ jobs:
           slot-name: 'Production'
           package: ./deploy #4
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_524C5B6C34F844F588C7E624E01266D3 }}
+
 
 
