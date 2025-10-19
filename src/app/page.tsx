@@ -11,6 +11,18 @@ type Product = {
 export default function Home() {
   const [barcode, setBarcode] = useState("");
   const [product, setProduct] = useState<Product>({});
+  const [productList, setProductList] = useState([]);
+  const [showProductList, setShowProductList] = useState(false);
+  const fetchProductList = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/products`);
+    const data = await res.json();
+    setProductList(data);
+    setShowProductList(true);
+  } catch (error) {
+    console.error("商品一覧取得エラー:", error);
+  }
+};
   const [purchaseList, setPurchaseList] = useState<Product[]>([]);
   const handleReadCode = async () => {
     try {
@@ -20,6 +32,7 @@ export default function Home() {
   catch (error) { console.error("APIエラー:", error);
     setProduct({ code: barcode, name: "通信エラー", price: 0 }); } };
   const handleAdd = () => { if (product.name && product.price !== undefined) { setPurchaseList([...purchaseList, product]); } };
+  
   const [showPopup, setShowPopup] = useState(false); //合計金額の計算
   // const total = purchaseList.reduce((sum, p) => sum + (p.price || 0), 0); //購入ボタン押下時の処理
   const total = purchaseList.reduce((sum, p) => sum + Math.floor((p.price || 0) * 1.1), 0);
@@ -45,6 +58,30 @@ return ( <div className="mx-auto px-4 max-w-xl">
 
   {/* 入力フォーム */}
 <section className="mt-8 border bg-white p-4 rounded-xl shadow relative">
+<div className="flex">
+  <div className="w-1/4 p-4 border-r">
+    <button
+      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+      onClick={fetchProductList}
+    >
+      商品一覧を表示
+    </button>
+
+    {showProductList && (
+      <ul className="mt-4 space-y-2">
+        {productList.map((item) => (
+          <li key={item.code} className="border p-2 rounded shadow-sm">
+            <span className="font-bold">{item.name}</span> - ¥{item.price}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+
+  <div className="w-3/4 p-4">
+    {/* 履歴表示コンポーネント */}
+  </div>
+</div>
   <button
     onClick={handleShowHistory}
     className="absolute top-2 right-2 bg-gray-500 text-white px-3 py-1 rounded text-sm"
