@@ -138,7 +138,7 @@ return ( <div className="mx-auto px-4 max-w-xl">
             <tr key={i}>
               <td className="border px-2 py-1">{item.name}</td>
               <td className="border px-2 py-1">¥{item.price}</td>
-              <td className="border px-2 py-1">{item.purchased_at}</td>
+              {/* <td className="border px-2 py-1">{item.purchased_at}</td> */}
             </tr>
           ))}
         </tbody>
