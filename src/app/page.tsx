@@ -53,7 +53,7 @@ return ( <div className="mx-auto px-4 max-w-xl">
   </button>
   <h2 className="mb-4 text-lg font-bold text-gray-500">入力フォーム</h2>
     <label className="block mb-2 text-sm font-bold text-gray-700">商品コード</label>
-    <input type="text" value={barcode} onChange={(e) => setBarcode(e.target.value)} placeholder="商品コードを入力" className="w-full p-2 border rounded" />
+    <input type="text" value={barcode} onChange={(e) => setBarcode(e.target.value)} placeholder="商品コードを入力" className="w-full p-2 border rounded"/>
     <div className="mt-4 flex justify-center gap-2">
       <button onClick={handleReadCode} className="bg-blue-500 text-white px-4 py-2 rounded">商品コード読み込み</button>
       <button onClick={() => {
